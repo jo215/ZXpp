@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C2A14670-7DF8-4D37-912A-E4338FC2B396}</ProjectGuid>
+    <RootNamespace>ZXpp</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\ZXpp;C:\Users\samcruise\Downloads\DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Src;C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\ZXpp;C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Flags.cpp" />
+    <ClCompile Include="FrameRateCounter.cpp" />
+    <ClCompile Include="Loudspeaker.cpp" />
+    <ClCompile Include="memory.cpp" />
+    <ClCompile Include="MockIODevice.cpp" />
+    <ClCompile Include="TestZ80.cpp" />
+    <ClCompile Include="TextureCache.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="ula.cpp" />
+    <ClCompile Include="z80.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FrameRateCounter.h" />
+    <ClInclude Include="IioDevice.h" />
+    <ClInclude Include="Loudspeaker.h" />
+    <ClInclude Include="memory.h" />
+    <ClInclude Include="MockIODevice.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="TestZ80.h" />
+    <ClInclude Include="TextureCache.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="ula.h" />
+    <ClInclude Include="z80.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Downloads\DirectXTK\DirectXTK_Desktop_2012.vcxproj">
+      <Project>{e0b52ae7-e160-4d32-bf3f-910b785e5a8e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="48.rom" />
+    <None Include="Arial12.spritefont" />
+    <None Include="hobbit.sna" />
+    <None Include="italic.spritefont" />
+    <None Include="JetPac.sna" />
+    <None Include="miner.sna" />
+    <None Include="tests.expected" />
+    <None Include="tests.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico" />
+    <Image Include="pixelSlices\block.png" />
+    <Image Include="pixelSlices\pixelSlice0.png" />
+    <Image Include="pixelSlices\pixelSlice1.png" />
+    <Image Include="pixelSlices\pixelSlice10.png" />
+    <Image Include="pixelSlices\pixelSlice100.png" />
+    <Image Include="pixelSlices\pixelSlice101.png" />
+    <Image Include="pixelSlices\pixelSlice102.png" />
+    <Image Include="pixelSlices\pixelSlice103.png" />
+    <Image Include="pixelSlices\pixelSlice104.png" />
+    <Image Include="pixelSlices\pixelSlice105.png" />
+    <Image Include="pixelSlices\pixelSlice106.png" />
+    <Image Include="pixelSlices\pixelSlice107.png" />
+    <Image Include="pixelSlices\pixelSlice108.png" />
+    <Image Include="pixelSlices\pixelSlice109.png" />
+    <Image Include="pixelSlices\pixelSlice11.png" />
+    <Image Include="pixelSlices\pixelSlice110.png" />
+    <Image Include="pixelSlices\pixelSlice111.png" />
+    <Image Include="pixelSlices\pixelSlice112.png" />
+    <Image Include="pixelSlices\pixelSlice113.png" />
+    <Image Include="pixelSlices\pixelSlice114.png" />
+    <Image Include="pixelSlices\pixelSlice115.png" />
+    <Image Include="pixelSlices\pixelSlice116.png" />
+    <Image Include="pixelSlices\pixelSlice117.png" />
+    <Image Include="pixelSlices\pixelSlice118.png" />
+    <Image Include="pixelSlices\pixelSlice119.png" />
+    <Image Include="pixelSlices\pixelSlice12.png" />
+    <Image Include="pixelSlices\pixelSlice120.png" />
+    <Image Include="pixelSlices\pixelSlice121.png" />
+    <Image Include="pixelSlices\pixelSlice122.png" />
+    <Image Include="pixelSlices\pixelSlice123.png" />
+    <Image Include="pixelSlices\pixelSlice124.png" />
+    <Image Include="pixelSlices\pixelSlice125.png" />
+    <Image Include="pixelSlices\pixelSlice126.png" />
+    <Image Include="pixelSlices\pixelSlice127.png" />
+    <Image Include="pixelSlices\pixelSlice128.png" />
+    <Image Include="pixelSlices\pixelSlice129.png" />
+    <Image Include="pixelSlices\pixelSlice13.png" />
+    <Image Include="pixelSlices\pixelSlice130.png" />
+    <Image Include="pixelSlices\pixelSlice131.png" />
+    <Image Include="pixelSlices\pixelSlice132.png" />
+    <Image Include="pixelSlices\pixelSlice133.png" />
+    <Image Include="pixelSlices\pixelSlice134.png" />
+    <Image Include="pixelSlices\pixelSlice135.png" />
+    <Image Include="pixelSlices\pixelSlice136.png" />
+    <Image Include="pixelSlices\pixelSlice137.png" />
+    <Image Include="pixelSlices\pixelSlice138.png" />
+    <Image Include="pixelSlices\pixelSlice139.png" />
+    <Image Include="pixelSlices\pixelSlice14.png" />
+    <Image Include="pixelSlices\pixelSlice140.png" />
+    <Image Include="pixelSlices\pixelSlice141.png" />
+    <Image Include="pixelSlices\pixelSlice142.png" />
+    <Image Include="pixelSlices\pixelSlice143.png" />
+    <Image Include="pixelSlices\pixelSlice144.png" />
+    <Image Include="pixelSlices\pixelSlice145.png" />
+    <Image Include="pixelSlices\pixelSlice146.png" />
+    <Image Include="pixelSlices\pixelSlice147.png" />
+    <Image Include="pixelSlices\pixelSlice148.png" />
+    <Image Include="pixelSlices\pixelSlice149.png" />
+    <Image Include="pixelSlices\pixelSlice15.png" />
+    <Image Include="pixelSlices\pixelSlice150.png" />
+    <Image Include="pixelSlices\pixelSlice151.png" />
+    <Image Include="pixelSlices\pixelSlice152.png" />
+    <Image Include="pixelSlices\pixelSlice153.png" />
+    <Image Include="pixelSlices\pixelSlice154.png" />
+    <Image Include="pixelSlices\pixelSlice155.png" />
+    <Image Include="pixelSlices\pixelSlice156.png" />
+    <Image Include="pixelSlices\pixelSlice157.png" />
+    <Image Include="pixelSlices\pixelSlice158.png" />
+    <Image Include="pixelSlices\pixelSlice159.png" />
+    <Image Include="pixelSlices\pixelSlice16.png" />
+    <Image Include="pixelSlices\pixelSlice160.png" />
+    <Image Include="pixelSlices\pixelSlice161.png" />
+    <Image Include="pixelSlices\pixelSlice162.png" />
+    <Image Include="pixelSlices\pixelSlice163.png" />
+    <Image Include="pixelSlices\pixelSlice164.png" />
+    <Image Include="pixelSlices\pixelSlice165.png" />
+    <Image Include="pixelSlices\pixelSlice166.png" />
+    <Image Include="pixelSlices\pixelSlice167.png" />
+    <Image Include="pixelSlices\pixelSlice168.png" />
+    <Image Include="pixelSlices\pixelSlice169.png" />
+    <Image Include="pixelSlices\pixelSlice17.png" />
+    <Image Include="pixelSlices\pixelSlice170.png" />
+    <Image Include="pixelSlices\pixelSlice171.png" />
+    <Image Include="pixelSlices\pixelSlice172.png" />
+    <Image Include="pixelSlices\pixelSlice173.png" />
+    <Image Include="pixelSlices\pixelSlice174.png" />
+    <Image Include="pixelSlices\pixelSlice175.png" />
+    <Image Include="pixelSlices\pixelSlice176.png" />
+    <Image Include="pixelSlices\pixelSlice177.png" />
+    <Image Include="pixelSlices\pixelSlice178.png" />
+    <Image Include="pixelSlices\pixelSlice179.png" />
+    <Image Include="pixelSlices\pixelSlice18.png" />
+    <Image Include="pixelSlices\pixelSlice180.png" />
+    <Image Include="pixelSlices\pixelSlice181.png" />
+    <Image Include="pixelSlices\pixelSlice182.png" />
+    <Image Include="pixelSlices\pixelSlice183.png" />
+    <Image Include="pixelSlices\pixelSlice184.png" />
+    <Image Include="pixelSlices\pixelSlice185.png" />
+    <Image Include="pixelSlices\pixelSlice186.png" />
+    <Image Include="pixelSlices\pixelSlice187.png" />
+    <Image Include="pixelSlices\pixelSlice188.png" />
+    <Image Include="pixelSlices\pixelSlice189.png" />
+    <Image Include="pixelSlices\pixelSlice19.png" />
+    <Image Include="pixelSlices\pixelSlice190.png" />
+    <Image Include="pixelSlices\pixelSlice191.png" />
+    <Image Include="pixelSlices\pixelSlice192.png" />
+    <Image Include="pixelSlices\pixelSlice193.png" />
+    <Image Include="pixelSlices\pixelSlice194.png" />
+    <Image Include="pixelSlices\pixelSlice195.png" />
+    <Image Include="pixelSlices\pixelSlice196.png" />
+    <Image Include="pixelSlices\pixelSlice197.png" />
+    <Image Include="pixelSlices\pixelSlice198.png" />
+    <Image Include="pixelSlices\pixelSlice199.png" />
+    <Image Include="pixelSlices\pixelSlice2.png" />
+    <Image Include="pixelSlices\pixelSlice20.png" />
+    <Image Include="pixelSlices\pixelSlice200.png" />
+    <Image Include="pixelSlices\pixelSlice201.png" />
+    <Image Include="pixelSlices\pixelSlice202.png" />
+    <Image Include="pixelSlices\pixelSlice203.png" />
+    <Image Include="pixelSlices\pixelSlice204.png" />
+    <Image Include="pixelSlices\pixelSlice205.png" />
+    <Image Include="pixelSlices\pixelSlice206.png" />
+    <Image Include="pixelSlices\pixelSlice207.png" />
+    <Image Include="pixelSlices\pixelSlice208.png" />
+    <Image Include="pixelSlices\pixelSlice209.png" />
+    <Image Include="pixelSlices\pixelSlice21.png" />
+    <Image Include="pixelSlices\pixelSlice210.png" />
+    <Image Include="pixelSlices\pixelSlice211.png" />
+    <Image Include="pixelSlices\pixelSlice212.png" />
+    <Image Include="pixelSlices\pixelSlice213.png" />
+    <Image Include="pixelSlices\pixelSlice214.png" />
+    <Image Include="pixelSlices\pixelSlice215.png" />
+    <Image Include="pixelSlices\pixelSlice216.png" />
+    <Image Include="pixelSlices\pixelSlice217.png" />
+    <Image Include="pixelSlices\pixelSlice218.png" />
+    <Image Include="pixelSlices\pixelSlice219.png" />
+    <Image Include="pixelSlices\pixelSlice22.png" />
+    <Image Include="pixelSlices\pixelSlice220.png" />
+    <Image Include="pixelSlices\pixelSlice221.png" />
+    <Image Include="pixelSlices\pixelSlice222.png" />
+    <Image Include="pixelSlices\pixelSlice223.png" />
+    <Image Include="pixelSlices\pixelSlice224.png" />
+    <Image Include="pixelSlices\pixelSlice225.png" />
+    <Image Include="pixelSlices\pixelSlice226.png" />
+    <Image Include="pixelSlices\pixelSlice227.png" />
+    <Image Include="pixelSlices\pixelSlice228.png" />
+    <Image Include="pixelSlices\pixelSlice229.png" />
+    <Image Include="pixelSlices\pixelSlice23.png" />
+    <Image Include="pixelSlices\pixelSlice230.png" />
+    <Image Include="pixelSlices\pixelSlice231.png" />
+    <Image Include="pixelSlices\pixelSlice232.png" />
+    <Image Include="pixelSlices\pixelSlice233.png" />
+    <Image Include="pixelSlices\pixelSlice234.png" />
+    <Image Include="pixelSlices\pixelSlice235.png" />
+    <Image Include="pixelSlices\pixelSlice236.png" />
+    <Image Include="pixelSlices\pixelSlice237.png" />
+    <Image Include="pixelSlices\pixelSlice238.png" />
+    <Image Include="pixelSlices\pixelSlice239.png" />
+    <Image Include="pixelSlices\pixelSlice24.png" />
+    <Image Include="pixelSlices\pixelSlice240.png" />
+    <Image Include="pixelSlices\pixelSlice241.png" />
+    <Image Include="pixelSlices\pixelSlice242.png" />
+    <Image Include="pixelSlices\pixelSlice243.png" />
+    <Image Include="pixelSlices\pixelSlice244.png" />
+    <Image Include="pixelSlices\pixelSlice245.png" />
+    <Image Include="pixelSlices\pixelSlice246.png" />
+    <Image Include="pixelSlices\pixelSlice247.png" />
+    <Image Include="pixelSlices\pixelSlice248.png" />
+    <Image Include="pixelSlices\pixelSlice249.png" />
+    <Image Include="pixelSlices\pixelSlice25.png" />
+    <Image Include="pixelSlices\pixelSlice250.png" />
+    <Image Include="pixelSlices\pixelSlice251.png" />
+    <Image Include="pixelSlices\pixelSlice252.png" />
+    <Image Include="pixelSlices\pixelSlice253.png" />
+    <Image Include="pixelSlices\pixelSlice254.png" />
+    <Image Include="pixelSlices\pixelSlice255.png" />
+    <Image Include="pixelSlices\pixelSlice26.png" />
+    <Image Include="pixelSlices\pixelSlice27.png" />
+    <Image Include="pixelSlices\pixelSlice28.png" />
+    <Image Include="pixelSlices\pixelSlice29.png" />
+    <Image Include="pixelSlices\pixelSlice3.png" />
+    <Image Include="pixelSlices\pixelSlice30.png" />
+    <Image Include="pixelSlices\pixelSlice31.png" />
+    <Image Include="pixelSlices\pixelSlice32.png" />
+    <Image Include="pixelSlices\pixelSlice33.png" />
+    <Image Include="pixelSlices\pixelSlice34.png" />
+    <Image Include="pixelSlices\pixelSlice35.png" />
+    <Image Include="pixelSlices\pixelSlice36.png" />
+    <Image Include="pixelSlices\pixelSlice37.png" />
+    <Image Include="pixelSlices\pixelSlice38.png" />
+    <Image Include="pixelSlices\pixelSlice39.png" />
+    <Image Include="pixelSlices\pixelSlice4.png" />
+    <Image Include="pixelSlices\pixelSlice40.png" />
+    <Image Include="pixelSlices\pixelSlice41.png" />
+    <Image Include="pixelSlices\pixelSlice42.png" />
+    <Image Include="pixelSlices\pixelSlice43.png" />
+    <Image Include="pixelSlices\pixelSlice44.png" />
+    <Image Include="pixelSlices\pixelSlice45.png" />
+    <Image Include="pixelSlices\pixelSlice46.png" />
+    <Image Include="pixelSlices\pixelSlice47.png" />
+    <Image Include="pixelSlices\pixelSlice48.png" />
+    <Image Include="pixelSlices\pixelSlice49.png" />
+    <Image Include="pixelSlices\pixelSlice5.png" />
+    <Image Include="pixelSlices\pixelSlice50.png" />
+    <Image Include="pixelSlices\pixelSlice51.png" />
+    <Image Include="pixelSlices\pixelSlice52.png" />
+    <Image Include="pixelSlices\pixelSlice53.png" />
+    <Image Include="pixelSlices\pixelSlice54.png" />
+    <Image Include="pixelSlices\pixelSlice55.png" />
+    <Image Include="pixelSlices\pixelSlice56.png" />
+    <Image Include="pixelSlices\pixelSlice57.png" />
+    <Image Include="pixelSlices\pixelSlice58.png" />
+    <Image Include="pixelSlices\pixelSlice59.png" />
+    <Image Include="pixelSlices\pixelSlice6.png" />
+    <Image Include="pixelSlices\pixelSlice60.png" />
+    <Image Include="pixelSlices\pixelSlice61.png" />
+    <Image Include="pixelSlices\pixelSlice62.png" />
+    <Image Include="pixelSlices\pixelSlice63.png" />
+    <Image Include="pixelSlices\pixelSlice64.png" />
+    <Image Include="pixelSlices\pixelSlice65.png" />
+    <Image Include="pixelSlices\pixelSlice66.png" />
+    <Image Include="pixelSlices\pixelSlice67.png" />
+    <Image Include="pixelSlices\pixelSlice68.png" />
+    <Image Include="pixelSlices\pixelSlice69.png" />
+    <Image Include="pixelSlices\pixelSlice7.png" />
+    <Image Include="pixelSlices\pixelSlice70.png" />
+    <Image Include="pixelSlices\pixelSlice71.png" />
+    <Image Include="pixelSlices\pixelSlice72.png" />
+    <Image Include="pixelSlices\pixelSlice73.png" />
+    <Image Include="pixelSlices\pixelSlice74.png" />
+    <Image Include="pixelSlices\pixelSlice75.png" />
+    <Image Include="pixelSlices\pixelSlice76.png" />
+    <Image Include="pixelSlices\pixelSlice77.png" />
+    <Image Include="pixelSlices\pixelSlice78.png" />
+    <Image Include="pixelSlices\pixelSlice79.png" />
+    <Image Include="pixelSlices\pixelSlice8.png" />
+    <Image Include="pixelSlices\pixelSlice80.png" />
+    <Image Include="pixelSlices\pixelSlice81.png" />
+    <Image Include="pixelSlices\pixelSlice82.png" />
+    <Image Include="pixelSlices\pixelSlice83.png" />
+    <Image Include="pixelSlices\pixelSlice84.png" />
+    <Image Include="pixelSlices\pixelSlice85.png" />
+    <Image Include="pixelSlices\pixelSlice86.png" />
+    <Image Include="pixelSlices\pixelSlice87.png" />
+    <Image Include="pixelSlices\pixelSlice88.png" />
+    <Image Include="pixelSlices\pixelSlice89.png" />
+    <Image Include="pixelSlices\pixelSlice9.png" />
+    <Image Include="pixelSlices\pixelSlice90.png" />
+    <Image Include="pixelSlices\pixelSlice91.png" />
+    <Image Include="pixelSlices\pixelSlice92.png" />
+    <Image Include="pixelSlices\pixelSlice93.png" />
+    <Image Include="pixelSlices\pixelSlice94.png" />
+    <Image Include="pixelSlices\pixelSlice95.png" />
+    <Image Include="pixelSlices\pixelSlice96.png" />
+    <Image Include="pixelSlices\pixelSlice97.png" />
+    <Image Include="pixelSlices\pixelSlice98.png" />
+    <Image Include="pixelSlices\pixelSlice99.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

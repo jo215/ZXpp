@@ -1,0 +1,873 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameRateCounter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ula.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Flags.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="z80.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestZ80.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MockIODevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Loudspeaker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameRateCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="z80.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ula.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestZ80.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IioDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MockIODevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Loudspeaker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="48.rom" />
+    <None Include="italic.spritefont" />
+    <None Include="tests.in" />
+    <None Include="tests.expected" />
+    <None Include="Arial12.spritefont" />
+    <None Include="hobbit.sna" />
+    <None Include="miner.sna" />
+    <None Include="JetPac.sna" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="directx.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice0.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice10.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice100.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice101.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice102.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice103.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice104.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice105.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice106.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice107.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice108.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice109.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice11.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice110.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice111.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice112.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice113.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice114.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice115.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice116.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice117.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice118.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice119.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice12.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice120.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice121.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice122.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice123.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice124.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice125.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice126.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice127.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice129.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice13.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice130.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice131.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice132.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice133.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice134.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice135.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice136.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice137.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice138.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice139.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice14.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice140.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice141.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice142.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice143.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice144.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice145.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice146.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice147.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice148.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice149.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice15.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice150.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice151.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice152.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice153.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice154.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice155.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice156.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice157.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice158.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice159.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice160.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice161.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice162.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice163.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice164.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice165.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice166.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice167.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice168.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice169.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice17.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice170.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice171.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice172.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice173.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice174.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice175.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice176.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice177.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice178.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice179.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice18.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice180.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice181.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice182.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice183.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice184.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice185.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice186.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice187.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice188.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice189.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice19.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice190.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice191.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice192.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice193.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice194.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice195.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice196.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice197.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice198.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice199.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice20.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice200.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice201.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice202.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice203.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice204.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice205.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice206.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice207.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice208.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice209.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice21.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice210.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice211.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice212.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice213.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice214.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice215.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice216.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice217.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice218.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice219.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice22.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice220.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice221.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice222.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice223.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice224.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice225.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice226.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice227.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice228.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice229.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice23.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice230.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice231.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice232.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice233.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice234.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice235.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice236.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice237.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice238.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice239.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice24.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice240.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice241.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice242.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice243.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice244.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice245.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice246.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice247.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice248.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice249.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice25.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice250.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice251.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice252.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice253.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice254.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice255.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice26.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice27.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice28.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice29.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice30.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice31.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice33.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice34.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice35.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice36.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice37.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice38.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice39.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice40.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice41.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice42.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice43.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice44.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice45.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice46.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice47.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice48.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice49.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice5.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice50.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice51.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice52.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice53.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice54.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice55.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice56.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice57.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice58.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice59.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice6.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice60.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice61.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice62.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice63.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice64.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice65.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice66.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice67.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice68.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice69.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice7.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice71.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice72.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice73.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice74.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice75.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice76.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice77.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice78.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice79.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice80.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice81.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice82.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice83.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice84.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice85.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice86.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice87.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice88.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice89.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice9.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice90.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice91.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice92.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice93.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice94.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice95.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice96.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice97.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice98.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="pixelSlices\pixelSlice99.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
