@@ -584,12 +584,11 @@ void Z80:: ModifyHalfCarryFlag8(int initial, int addition)
     }
     else
     {
-        int hc = ((initial & 0xf) - ((-addition) & 0xf)) & 0x10;
-        //  Half-borrow
-        if (hc != 0x10)
-			Reset(HALFCARRY);
-        else
+        int subtract = -addition;
+        if ((((initial & 0x0f) - (subtract & 0x0f)) & 0x10) != 0)
 			Set(HALFCARRY);
+        else
+			Reset(HALFCARRY);
     }
 }
 
@@ -635,10 +634,32 @@ void Z80:: ModifyZeroFlag(int result)
 //	Sets the Overflow flag if there was an overflow after 8-bit addition or subtraction, resets it otherwise
 void Z80:: ModifyOverflowFlag8(int initial, int addition, int result)
 {
-	if ((initial & 0x80) == (addition & 0x80) && (initial & 0x80) != (result & 0x80))
-		Set(PARITYOVERFLOW);
+    if (addition >= 0)
+    {
+        //  For addition, operands with like signs may cause overflow
+        if (((initial & 0x80) ^ (addition & 0x80)) == 0)
+        {
+            //  If the result has a different sign then overflow is caused
+            if (((result & 0x80) ^ (initial & 0x80)) == 0x80)
+            {
+				Set(PARITYOVERFLOW);
+                return;
+            }
+        }
+        Reset(PARITYOVERFLOW);
+    }
     else
-		Reset(PARITYOVERFLOW); 
+    {
+        int subtract = -addition;
+        if (((initial ^ subtract) & (initial ^ A) & 0x80) != 0)
+        {
+            Set(PARITYOVERFLOW);
+        }
+        else
+        {
+            Reset(PARITYOVERFLOW);
+        } 
+    }
 }
 
 //	Sets the Overflow flag if there was an overflow after 16-bit addition or subtraction, resets it otherwise
@@ -2574,12 +2595,12 @@ void Z80:: CCF()
     //  Previous carry copied to half-carry?
     if ((F & 1) == 1)	// carry flag
     {
-        //Set(Flag.HalfCarry);
+		Set(HALFCARRY);
 		Reset(CARRY);
     }
     else
     {
-        //Reset(Flag.HalfCarry);
+        Reset(HALFCARRY);
 		Set(CARRY);
     }
 
