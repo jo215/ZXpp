@@ -651,7 +651,7 @@ void Z80:: ModifyOverflowFlag8(int initial, int addition, int result)
     else
     {
         int subtract = -addition;
-        if (((initial ^ subtract) & (initial ^ A) & 0x80) != 0)
+        if (((initial ^ subtract) & (initial ^ result) & 0x80) != 0)
         {
             Set(PARITYOVERFLOW);
         }
