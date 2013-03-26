@@ -105,6 +105,7 @@
     <None Include="miner.sna" />
     <None Include="tests.expected" />
     <None Include="tests.in" />
+    <None Include="z80docflags.tap" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="directx.ico" />

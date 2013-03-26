@@ -12,8 +12,8 @@ TextureCache::TextureCache(ID3D11Device* device, ID3D11DeviceContext* context)
 
 	block = 0;
 	string blockName = "pixelSlices\\block.png";
-	wstring wideName = wstring(blockName.begin(), blockName.end());
-	CreateWICTextureFromFile( device, context, wideName.c_str(), nullptr, &block);
+	wstring wName = wstring(blockName.begin(), blockName.end());
+	CreateWICTextureFromFile( device, context, wName.c_str(), nullptr, &block);
 
 	for (int i = 0; i < 256; i++)
 	{

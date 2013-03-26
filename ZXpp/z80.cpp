@@ -1053,7 +1053,7 @@ void Z80:: CPDR()
         cycleTStates += 16;
     }
 
-    ModifySignFlag8(A - compare);
+    ModifySignFlag8((A - compare) & 0xff);
     ModifyHalfCarryFlag8(A, -compare);
     int n = (A - compare) & 0xff;
     if ((F & 16) == 16)	//	halfCarry
@@ -1198,7 +1198,7 @@ void Z80:: CPIR()
         cycleTStates += 16;
     }
 
-    ModifySignFlag8(A - compare);
+    ModifySignFlag8((A - compare) & 0xff);
     ModifyHalfCarryFlag8(A, -compare);
     int n = (A - compare) & 0xff;
     if ((F & 16) == 16)	//	halfCarry
@@ -1206,7 +1206,7 @@ void Z80:: CPIR()
         n = (n-1) & 0xff;
     }
     ModifyUndocumentedFlagsCompareGroup(n);
-    if (Get16BitRegisters(0, false) - 1 != 0)
+    if (Get16BitRegisters(0, false) != 0)
 		Set(PARITYOVERFLOW);
     else
 		Reset(PARITYOVERFLOW);
@@ -2628,52 +2628,47 @@ void Z80:: CPL()
 void Z80:: DAA()
 {
 	cycleTStates += 4;
-    int r = A;
-	
-    if ((F & SUBTRACT) != SUBTRACT)
-    {       
-		if (((F & HALFCARRY) == HALFCARRY) || (A & 0xf) > 9)
-            r += 0x06;
 
-        if (((F & CARRY) == CARRY) || A > 0x99)
-            r += 0x60;
-    }
-    else
-    {
-        if (((F & HALFCARRY) == HALFCARRY) || (A & 0xf) > 9)
-            r -= 0x06;
+	int CF = ((F & CARRY) == CARRY) ? 1 : 0;
+	int HF = ((F & HALFCARRY) == HALFCARRY) ? 1 : 0;
+    int NF = ((F & SUBTRACT) == SUBTRACT) ? 1 : 0;
 
-        if (((F & CARRY) == CARRY) || (A > 0x99))
-            r -= 0x60;
-    }
-
-    r = r & 0xFF;
-
-    if (((A ^ r) & 0x10) == 0x10)
-    {
-		Set(HALFCARRY);
-    }
-    else
-    {
-		Reset(HALFCARRY);
-    }
+    int hiNibble = (A >> 4) & 0xf;
+    int loNibble = A & 0xf;
             
-    if (A > 0x99)
-    {
-		Set(CARRY);
-    }
+    int diff = 0;
+
+    if (CF == 0 && hiNibble < 10 && HF == 0 && loNibble < 10) diff = 0;
+    else if (CF == 0 && hiNibble < 10 && HF == 1 && loNibble < 10) diff = 6;
+    else if (CF == 0 && hiNibble < 9 && loNibble > 9) diff = 6;
+    else if (CF == 0 && hiNibble > 9 && HF == 0 && loNibble < 10) diff = 0x60;
+    else if (CF == 1 && HF == 0 && loNibble < 10) diff = 0x60;
+    else if (CF == 1 && HF == 1 && loNibble < 10) diff = 0x66;
+    else if (CF == 1 && loNibble > 9) diff = 0x66;
+    else if (CF == 0 && hiNibble > 8 && loNibble > 9) diff = 0x66;
+    else if (CF == 0 && hiNibble > 9 && HF == 1 && loNibble < 10) diff = 0x66;
+
+    if (CF == 0 && hiNibble < 10 && loNibble < 10) Reset(CARRY);
+    else if (CF == 0 && hiNibble < 9 && loNibble > 9) Reset(CARRY);
+    else if (CF == 0 && hiNibble > 8 && loNibble > 9) Set(CARRY);
+    else if (CF == 0 && hiNibble > 9 && loNibble < 10) Set(CARRY);
+    else if (CF == 1) Set(CARRY);
+
+    if (NF == 0 && loNibble < 10) Reset(HALFCARRY);
+    else if (NF == 0 && loNibble > 9) Set(HALFCARRY);
+    else if (NF == 1 && HF == 0) Reset(HALFCARRY);
+    else if (NF == 1 && HF == 1 && loNibble > 5) Reset(HALFCARRY);
+    else if (NF == 1 && HF == 1 && loNibble < 6) Set(HALFCARRY);
+
+    if (NF == 0)
+        A = (A + diff) & 0xff;
     else
-    {
-		Reset(CARRY);
-    }
-    ModifyParityFlagLogical(r);
-            
-    ModifySignFlag8(r);
-    ModifyZeroFlag(r);
+        A = (A - diff) & 0xff;
 
-    ModifyUndocumentedFlags8(r);
-
-    A = r;
+    ModifySignFlag8(A);
+    ModifyParityFlagLogical(A);
+    ModifyUndocumentedFlags8(A);
+    ModifyZeroFlag(A);
 }
 void Z80:: RRA()
 {
