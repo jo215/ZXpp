@@ -2228,7 +2228,7 @@ void Z80:: PUSH_qq(int qq)
             SP = (SP - 1) & 0xffff;
             memory->memory[SP] = A;
             SP = (SP - 1) & 0xffff;
-            memory->memory[SP] = GetFlagsAsByte();
+            memory->memory[SP] = F;
             break;
     }
 }
