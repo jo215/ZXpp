@@ -220,7 +220,7 @@ HRESULT InitDevice()
 	//	Timer
 	timer = new Timer();
     // Create a frame rate counter
-	frc = new FrameRateCounter(g_pd3dDevice , g_pImmediateContext);
+	//frc = new FrameRateCounter(g_pd3dDevice , g_pImmediateContext);
 	//	Tests
 	//test = new TestZ80(frc);
 

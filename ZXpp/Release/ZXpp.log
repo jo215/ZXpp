@@ -1,8 +1,8 @@
-﻿Build started 3/26/2013 3:20:13 PM.
+﻿Build started 4/9/2013 5:11:46 PM.
      1>Project "C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\ZXpp\ZXpp.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Src" /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\ZXpp" /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Inc" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt TextureCache.cpp
-         TextureCache.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Src" /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\ZXpp" /I"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\DirectXTK\Inc" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ula.cpp
+         ula.cpp
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED' : macro redefinition
                  C:\Program Files (x86)\Windows Kits\8.0\Include\shared\winerror.h(49449) : see previous definition of 'DXGI_STATUS_OCCLUDED'
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED' : macro redefinition
@@ -59,6 +59,7 @@
                  C:\Program Files (x86)\Windows Kits\8.0\Include\shared\winerror.h(49793) : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
      1>c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND' : macro redefinition
                  C:\Program Files (x86)\Windows Kits\8.0\Include\shared\winerror.h(49802) : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
+     1>ula.cpp(372): warning C4244: 'initializing' : conversion from 'std::streamoff' to 'size_t', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\Release\ZXpp.exe" /NOLOGO d3d11.lib dxguid.lib winmm.lib comctl32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\Release\ZXpp.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\samcruise\Documents\Visual Studio 2012\Projects\ZXpp\Release\ZXpp.lib" /MACHINE:X86 /SAFESEH Release\Application.obj
          Release\Flags.obj
@@ -80,4 +81,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.50
+Time Elapsed 00:00:02.88

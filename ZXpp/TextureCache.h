@@ -8,7 +8,7 @@ class TextureCache
 private:
 
 	ID3D11ShaderResourceView*           g_pTextureRV1 [256];
-	ID3D11ShaderResourceView* block;
+	ID3D11ShaderResourceView*			block;
 public:
 	TextureCache(ID3D11Device* device, ID3D11DeviceContext* context);
 	~TextureCache();

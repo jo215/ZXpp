@@ -32,24 +32,22 @@ void Z80:: Reset()
 	IFF1 = false;
 	IFF2 = false;
 	interruptMode = 0;
-            
+
 	//  Sanity
 	opcode = 0;
 	prefix = 0;
 	prefix2 = 0;
 	displacement = 0;
+	cycleTStates = 0;
 }
 
 //	Starts an interrupt-handling routine
 void Z80:: Interrupt(bool nonMaskable)
 {
-	if (isHalted)
-    {
-        isHalted = false;
-        PC++;
-    }
+
     if (nonMaskable)
     {
+		R++;
         memory->memory[--SP] = PC >> 8;
         memory->memory[--SP] = PC & 0xff;
         PC = 0x0066;
@@ -57,6 +55,7 @@ void Z80:: Interrupt(bool nonMaskable)
     }
     if (IFF1)
     {
+		R++;
         switch (interruptMode)
         {
             case 0:
@@ -80,11 +79,12 @@ void Z80:: Interrupt(bool nonMaskable)
 //	Main execution loop
 void Z80:: Run(bool exitOnNOP, int maxTStates)
 {
-	cycleTStates = 0;
+	cycleTStates = cycleTStates % 69888;
+    previousTStates = cycleTStates;
 	bool running = true;
 	while (running)
 	{
-		previousTStates = cycleTStates;
+
 		//  Fetch
 		opcode = memory->memory[PC++];
 		prefix = 0;
@@ -489,7 +489,7 @@ void Z80:: Run(bool exitOnNOP, int maxTStates)
 			R = 0;
 
 		//  If we have defined a max amount of tStates to run for then check if we should return
-		if (maxTStates > 0 && cycleTStates >= maxTStates)
+		if (maxTStates > 0 && cycleTStates - previousTStates >= maxTStates)
 		{
 			running = false;
 		}
@@ -956,7 +956,7 @@ void Z80:: OTDR()
     Set16BitRegisters(2, Get16BitRegisters(2, false) - 1);
     if (B != 0)
     {
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
         cycleTStates += 21;
     }
     else
@@ -998,7 +998,7 @@ void Z80:: INDR()
     B = (B - 1) & 0xff;
     if (B != 0)
     {
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
         cycleTStates += 21;
     }
     else
@@ -1045,7 +1045,7 @@ void Z80:: CPDR()
 
     if (compare != A && Get16BitRegisters(0, false) != 0)
     {
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
         cycleTStates += 21;
     }
     else
@@ -1078,7 +1078,7 @@ void Z80:: LDDR()
     else
     {
         cycleTStates += 21;
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
     }
 	Reset(HALFCARRY);
 
@@ -1102,7 +1102,7 @@ void Z80:: OTIR()
     if (B != 0)
     {
         cycleTStates += 21;
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
     }
     else
     {
@@ -1143,7 +1143,7 @@ void Z80:: INIR()
     B = (B - 1) & 0xff;
     if (B != 0)
     {
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
         cycleTStates += 21;
     }
     else
@@ -1190,7 +1190,7 @@ void Z80:: CPIR()
 
     if (compare != A && Get16BitRegisters(0, false)  != 0)
     {
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
         cycleTStates += 21;
     }
     else
@@ -1223,7 +1223,7 @@ void Z80:: LDIR()
     else
     {
         cycleTStates += 21;
-        PC -= 2;
+        PC = (PC - 2) & 0xffff;
     }     
        
 	Reset(HALFCARRY);
@@ -1560,7 +1560,7 @@ void Z80:: LD_A_I()
 void Z80:: LD_R_A()
 {
 	cycleTStates += 9;
-    R = A - 2;
+    R = (A - 2) & 0xff;
 }
 void Z80:: LD_I_A()
 {
@@ -1583,16 +1583,19 @@ void Z80:: RETI()
 {
 	cycleTStates += 14;
 
-    PC = memory->memory[SP++];
-    PC += (memory->memory[SP++] << 8);
+    PC = memory->memory[SP];
+    SP = (SP + 1) & 0xffff;
+    PC += (memory->memory[SP] << 8);
+    SP = (SP + 1) & 0xffff;
 }
 void Z80:: RETN()
 {
 	cycleTStates += 14;
 
-    IFF1 = IFF2;
-    PC = memory->memory[SP++];
-    PC += (memory->memory[SP++] << 8);
+    PC = memory->memory[SP];
+    SP = (SP + 1) & 0xffff;
+    PC += (memory->memory[SP] << 8);
+    SP = (SP + 1) & 0xffff;
 }
 
 void Z80:: NEG()
@@ -1623,11 +1626,13 @@ void Z80:: LD_dd_nn2(int dd)
 {
 	cycleTStates += 20;
 
-    int address = memory->memory[PC++];
-	address += (memory->memory[PC++] << 8);
+    int address = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
+	address += (memory->memory[PC] << 8);
+	PC = (PC + 1) & 0xffff;
 
 	int val = memory->memory[address];
-	val += (memory->memory[address + 1] << 8);
+	val += (memory->memory[(address + 1) & 0xffff] << 8);
 
     Set16BitRegisters(dd, val);
 }
@@ -1635,10 +1640,12 @@ void Z80:: LD_nn_dd(int dd)
 {
 	cycleTStates += 20;
 
-    int address = memory->memory[PC++];
-	address += (memory->memory[PC++] << 8);
+    int address = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
+	address += (memory->memory[PC] << 8);
+	PC = (PC + 1) & 0xffff;
     memory->memory[address] = Get16BitRegisters(dd, false) & 0xff;
-    memory->memory[address + 1] = Get16BitRegisters(dd, false) >> 8;
+    memory->memory[(address + 1) & 0xffff] = Get16BitRegisters(dd, false) >> 8;
 }
 
 void Z80:: ADC_HL(int ss)
@@ -1647,8 +1654,11 @@ void Z80:: ADC_HL(int ss)
 
     int initial = Get16BitRegisters(2, false);
     int addition = Get16BitRegisters(ss, false);
-    if ((F & 1) == 1)	// carry flag
+
+    if ((F & CARRY) == CARRY) {
         addition++;
+		addition = addition & 0xffff;
+	}
 
     int result = (initial + addition) & 0xffff;
     Set16BitRegisters(2, result);
@@ -1672,9 +1682,12 @@ void Z80:: SBC_HL(int ss)
 	cycleTStates += 15;
 
     int initial = Get16BitRegisters(2, false);
-    int addition = -Get16BitRegisters(ss, false);
-    if ((F & 1) == 1) // carry flag
-        addition--;
+    int addition = Get16BitRegisters(ss, false);
+    if ((F & CARRY) == CARRY) {
+        addition++;
+		addition = addition & 0xffff;
+	}
+	addition = -addition;
 
     int result = (initial + addition) & 0xffff;
     Set16BitRegisters(2, result);
@@ -1708,7 +1721,7 @@ void Z80:: IN_r_C(int r)
 	cycleTStates += 12;
 
     int input = io->Read(Get16BitRegisters(0, false));
-    if (r != 6)
+    if (r != 6  && opcode != 0xed70)
         SetRegister(r, input);
 
     ModifySignFlag8(input);
@@ -2007,9 +2020,10 @@ void Z80:: RLC(int r)
 void Z80:: RST(int p)
 {
 	cycleTStates += 11;
-
-    memory->memory[--SP] = PC >> 8;
-    memory->memory[--SP] = PC & 0xff;
+    SP = (SP - 1) & 0xffff;
+    memory->memory[SP] = PC >> 8;
+	SP = (SP - 1) & 0xffff;
+    memory->memory[SP] = PC & 0xff;
     PC = p;
 }
 
@@ -2018,7 +2032,8 @@ void Z80:: CP_n()
 	cycleTStates += 7;
 
     int initial = A;
-    int addition = memory->memory[PC++] * -1;
+    int addition = memory->memory[PC] * -1;
+	PC = (PC + 1) & 0xffff;
 
     A = (A + addition) & 0xff;
 
@@ -2038,7 +2053,8 @@ void Z80:: OR_n()
 {
 	cycleTStates += 7;
 
-    A = A | memory->memory[PC++];
+    A = A | memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
 
     ModifySignFlag8(A);
     ModifyZeroFlag(A);
@@ -2053,7 +2069,8 @@ void Z80:: XOR_n()
 {
 	cycleTStates += 7;
 
-    A = A ^ memory->memory[PC++];
+    A = A ^ memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
 
     ModifySignFlag8(A);
     ModifyZeroFlag(A);
@@ -2068,7 +2085,8 @@ void Z80:: AND_n()
 {
 	cycleTStates += 7;
 
-    A = A & memory->memory[PC++];
+    A = A & memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
 
     ModifySignFlag8(A);
     ModifyZeroFlag(A);
@@ -2085,9 +2103,13 @@ void Z80:: SBC_A_n()
 	cycleTStates += 7;
 
     int initial = A;
-    int addition = memory->memory[PC++] * -1;
-    if ((F & 1) == 1)	//	 carry flag
-        addition--;
+    int addition = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
+    if ((F & CARRY) == CARRY) {
+        addition++;
+		addition = addition & 0xff;
+	}
+	addition = -addition;
 
     A = (A + addition) & 0xff;
 
@@ -2105,7 +2127,8 @@ void Z80:: SUB_n()
 	cycleTStates += 7;
 
     int initial = A;
-    int addition = memory->memory[PC++] * -1;
+    int addition = memory->memory[PC] * -1;
+	PC = (PC + 1) & 0xffff;
 
     A = (A + addition) & 0xff;
 
@@ -2123,10 +2146,13 @@ void Z80:: ADC_A_n()
 	cycleTStates += 7;
 
     int initial = A;
-    int addition = memory->memory[PC++];
-    if ((F & 1) == 1)	//	carry flag
-        addition++;
+    int addition = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
 
+    if ((F & CARRY) == CARRY) {
+        addition++;
+		addition = addition & 0xff;
+	}
     A = (A + addition) & 0xff;
 
     ModifySignFlag8(A);
@@ -2143,7 +2169,8 @@ void Z80:: ADD_A_n()
 	cycleTStates += 7;
 
     int initial = A;
-    int addition = memory->memory[PC++];
+    int addition = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
 
     A = (A + addition) & 0xff;
 
@@ -2160,12 +2187,17 @@ void Z80:: ADD_A_n()
 void Z80:: CALL_nn()
 {
 	cycleTStates += 17;
-	memory->memory[--SP] = (PC+2) >> 8;
-	memory->memory[--SP] = (PC+2) & 0xff;
-	int newPC;
-    newPC = memory->memory[PC++];
-	newPC += (memory->memory[PC++] << 8);
-	PC = newPC;
+	int low = memory->memory[PC];
+    PC = (PC + 1) & 0xffff;
+    int high = memory->memory[PC];
+    PC = (PC + 1) & 0xffff;
+
+    SP = (SP - 1) & 0xffff;
+    memory->memory[SP] = PC >> 8;
+    SP = (SP - 1) & 0xffff;
+    memory->memory[SP] = PC & 0xff;
+
+    PC = (high << 8) + low;
 }
 
 void Z80:: PUSH_qq(int qq)
@@ -2174,21 +2206,46 @@ void Z80:: PUSH_qq(int qq)
 
     switch (qq)
     {
-        case 0: memory->memory[--SP] = B; memory->memory[--SP] = C; break;
-        case 1: memory->memory[--SP] = D; memory->memory[--SP] = E; break;
-        case 2: memory->memory[--SP] = GetRegister(4); memory->memory[--SP] = GetRegister(5); break;
-        case 3: memory->memory[--SP] = A; memory->memory[--SP] = F; break;
+        case 0: 
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = B;
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = C;
+            break;
+        case 1:
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = D;
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = E;
+            break;
+        case 2:
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = GetRegister(4);
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = GetRegister(5);
+            break;
+        case 3:
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = A;
+            SP = (SP - 1) & 0xffff;
+            memory->memory[SP] = GetFlagsAsByte();
+            break;
     }
 }
 void Z80:: CALL_cc_nn(int cc)
 {
-	int low = memory->memory[PC++];
-    int high = memory->memory[PC++];
+	int low = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
+    int high = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
+
     if (CheckCondition(cc))
     {
         cycleTStates += 17;
-        memory->memory[--SP] = PC >> 8;
-        memory->memory[--SP] = PC & 0xff;
+        SP = (SP - 1) & 0xffff;
+        memory->memory[SP] = PC >> 8;
+        SP = (SP - 1) & 0xffff;
+        memory->memory[SP] = PC & 0xff;
         PC = (high << 8) + low;
     }
     else
@@ -2227,10 +2284,10 @@ void Z80:: EX_SP_HL()
 	cycleTStates += 19;
 
     int low = memory->memory[SP];
-    int high = memory->memory[SP + 1];
+    int high = memory->memory[(SP + 1) & 0xffff];
     int hl = Get16BitRegisters(2, false);
     memory->memory[SP] = hl & 0xff;
-    memory->memory[SP + 1] = hl >> 8;
+    memory->memory[(SP + 1) & 0xffff] = hl >> 8;
     SetRegister(5, low);
     SetRegister(4, high);
 }
@@ -2238,38 +2295,31 @@ void Z80:: EX_SP_HL()
 void Z80:: IN_A_n()
 {
 	cycleTStates += 11;
-    int port = memory->memory[PC++];
+    int port = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
     A = io->Read((A << 8) + port);
 }
 void Z80:: OUT_n_A()
 {
 	cycleTStates += 11;
-    int port = memory->memory[PC++];
+    int port = memory->memory[PC];
+	PC = (PC + 1) & 0xffff;
     io->Write((A << 8) + port, A);
 }
 
 void Z80:: JP_nn()
 {
 	cycleTStates += 10;
-	int newPC;
-    newPC = memory->memory[PC++];
-	newPC += (memory->memory[PC++] << 8);
-	PC = newPC;
+	PC = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
 }
 void Z80:: JP_cc_nn(int cc)
 {
 	cycleTStates += 10;
 
-    if (CheckCondition(cc))
-	{
-		int newPC;
-        newPC = memory->memory[PC++];
-		newPC += (memory->memory[PC++] << 8);
-		PC = newPC;
-	}
-    else
-	{
-        PC += 2;
+    if (CheckCondition(cc)) {
+        PC = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
+	} else {
+		PC = (PC + 2) & 0xffff;
 	}
 }
 
@@ -2317,8 +2367,10 @@ void Z80:: EXX()
 void Z80:: RET()
 {
 	cycleTStates += 10;
-    PC = memory->memory[SP++];
-    PC += (memory->memory[SP++] << 8);
+    PC = memory->memory[SP];
+    SP = (SP + 1) & 0xffff;
+    PC += (memory->memory[SP] << 8);
+    SP = (SP + 1) & 0xffff;
 }
 void Z80:: POP_qq(int qq)
 {
@@ -2326,14 +2378,18 @@ void Z80:: POP_qq(int qq)
     if (qq == 3)
     {
         //  Pop to AF
-        F = memory->memory[SP++];
-        A = memory->memory[SP++];
+        F = memory->memory[SP];
+		SP = (SP + 1) & 0xffff;
+        A = memory->memory[SP];
+		SP = (SP + 1) & 0xffff;
     }
     else
     {
         //  Pop to standard register pair
-		int low = memory->memory[SP++];
-		int high = memory->memory[SP++];
+		int low = memory->memory[SP];
+		SP = (SP + 1) & 0xffff;
+		int high = memory->memory[SP];
+		SP = (SP + 1) & 0xffff;
         Set16BitRegisters(qq, low, high);
     }
 }
@@ -2342,8 +2398,10 @@ void Z80:: RET_cc(int cc)
 	if (CheckCondition(cc))
     {
         cycleTStates += 11;
-        PC = memory->memory[SP++];
-        PC += (memory->memory[SP++] << 8);
+        PC = memory->memory[SP];
+		SP = (SP + 1) & 0xffff;
+		PC += (memory->memory[SP] << 8);
+		SP = (SP + 1) & 0xffff;
     }
     else
     {
@@ -2454,10 +2512,13 @@ void Z80:: SBC_A_r(int r)
         ReadDisplacementByte();
     }
 
-    int addition = -GetRegister(r);
+    int addition = GetRegister(r);
 
-    if ((F & 1) == 1)	//	carry flag
-        addition--;
+    if ((F & CARRY) == CARRY) {
+        addition++;
+		addition = addition & 0xff;
+	}
+	addition = -addition;
 
     A = (A + addition) & 0xff;
 
@@ -2511,8 +2572,10 @@ void Z80:: ADC_A_r(int r)
 
     int addition = GetRegister(r);
 
-    if ((F & 1) == 1) // carry flag
+    if ((F & CARRY) == CARRY) {
         addition++;
+		addition = addition & 0xff;
+	}
 
     A = (A + addition) & 0xff;
 
@@ -2556,7 +2619,7 @@ void Z80:: HALT()
 {
 	cycleTStates += 4;
     isHalted = true;
-    PC--;
+    PC = (PC - 1) & 0xffff;
 }
 
 void Z80:: LD_r_r(int r, int r2)
@@ -2593,7 +2656,8 @@ void Z80:: CCF()
 	cycleTStates += 4;
 
     //  Previous carry copied to half-carry?
-    if ((F & 1) == 1)	// carry flag
+	//  confirmed yes 24/03/2012
+    if ((F & CARRY) == CARRY)	// carry flag
     {
 		Set(HALFCARRY);
 		Reset(CARRY);
@@ -2767,7 +2831,8 @@ void Z80:: LD_r_n(int r)
         ReadDisplacementByte();
         cycleTStates++;          
     }
-    SetRegister(r, memory->memory[PC++]);
+    SetRegister(r, memory->memory[PC]);
+	PC = (PC + 1) & 0xffff;
 }
 void Z80:: DEC_r(int r)
 {
@@ -2781,7 +2846,7 @@ void Z80:: DEC_r(int r)
     }
 
     int initial = GetRegister(r);
-    int result = (initial - 1) & 0xFF;
+    int result = (initial - 1) & 0xff;
 
     SetRegister(r, result);
 
@@ -2805,7 +2870,7 @@ void Z80:: INC_r(int r)
     }
 
     int initial = GetRegister(r);
-    int result = (initial + 1) & 0xFF;
+    int result = (initial + 1) & 0xff;
 
     SetRegister(r, result);
 
@@ -2831,18 +2896,17 @@ void Z80:: INC_ss(int ss)
 void Z80:: LD_A_nn()
 {
 	cycleTStates += 13;
-	int low = memory->memory[PC++];
-	int high = (memory->memory[PC++] << 8);
-
-	A = memory->memory[high + low];
+	int address = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
+    PC = (PC + 2) & 0xffff;
+    A = memory->memory[address];
 }
 void Z80:: LD_HL_nn()
 {
 	cycleTStates += 16;
-    int address = memory->memory[PC++];
-	address += (memory->memory[PC++] << 8);
+    int address = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
+    PC = (PC + 2) & 0xffff;
     SetRegister(5, memory->memory[address]);
-    SetRegister(4, memory->memory[address + 1]);
+    SetRegister(4, memory->memory[(address + 1) & 0xffff]);
 }
 void Z80:: LD_A_BC()
 {
@@ -2857,19 +2921,18 @@ void Z80:: LD_A_DE()
 void Z80:: LD_nn_A()
 {
 	cycleTStates += 13;
-	int loc = memory->memory[PC++];
-	loc += (memory->memory[PC++] << 8);
-    memory->memory[loc] = A;
+	int address = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
+    PC = (PC + 2) & 0xffff;
+    memory->memory[address] = A;
 }
 void Z80:: LD_nn_HL()
 {
 	cycleTStates += 16;
 
-    int address = memory->memory[PC++];
-	address += (memory->memory[PC++] << 8);
-	
+    int address = memory->memory[PC] + (memory->memory[(PC + 1) & 0xffff] << 8);
+    PC = (PC + 2) & 0xffff;
     memory->memory[address] = GetRegister(5);
-    memory->memory[address + 1] = GetRegister(4);
+    memory->memory[(address + 1) & 0xffff] = GetRegister(4);
 }
 void Z80:: LD_DE_A()
 {
@@ -2902,9 +2965,11 @@ void Z80:: ADD_HL_ss(int ss)
 }
 void Z80:: LD_dd_nn(int dd)
 {
-	int low = memory->memory[PC++];
-	int high = memory->memory[PC++];
-	Set16BitRegisters(dd, low, high);
+	int low = memory->memory[PC];
+    PC = (PC + 1) & 0xffff;
+    int high = memory->memory[PC];
+    PC = (PC + 1) & 0xffff;
+    Set16BitRegisters(dd, low, high);
     cycleTStates += 10;
 }
 

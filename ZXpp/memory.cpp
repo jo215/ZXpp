@@ -63,15 +63,22 @@ void Memory::Write(int index, int value, bool ulaAccess = false)
 void Memory::CorrectForContention(int index)
 {
 	if (CPU == NULL) return;
-	if (CPU->cycleTStates >= 14335 && CPU->cycleTStates < 57343)
-	{
-		int line = (CPU->cycleTStates - 14335) / 224;
-		if (line < 192)
+	if (contentionStart <= index && index <= contentionEnd)
+    {
+		if (CPU->cycleTStates >= 14335 && CPU->cycleTStates < 57343)
 		{
-			int pos = (CPU->cycleTStates - 14335) % 224;
-			int delay = 6 - (pos % 8);
-			if (delay < 0) delay = 0;
-			CPU->cycleTStates += delay;
+			int line = (CPU->cycleTStates - 14335) / 224;
+			if (line >= 0  && line < 192)
+            {
+				//  During these cycles the screen is being rendered by the ULA
+				int pos = (CPU->cycleTStates - 14335) % 224;
+				//  If we are drawing side border then no contention
+                if (pos >= 128) return;
+				//  Otherwise delay according to contention pattern (see final report)
+				int delay = 6 - (pos % 8);
+				if (delay < 0) delay = 0;
+				CPU->cycleTStates += delay;
+			}
 		}
 	}
 }
