@@ -5,8 +5,12 @@
 //	Constructor
 ULA::ULA(ID3D11Device* device, ID3D11DeviceContext* dcontext, HINSTANCE hinstance, HWND hwnd, ID3D11RenderTargetView* backBuffer)
 {
+	//speaker = new Loudspeaker();
+	//speaker->Init(hwnd);
+
 	backbufferview = backBuffer;
 	context = dcontext;
+	cache = 0;
 	cache = new TextureCache(device, dcontext);
 	spriteBatch.reset( new SpriteBatch( dcontext) );
 	screenScale = 2.0f;
@@ -15,14 +19,12 @@ ULA::ULA(ID3D11Device* device, ID3D11DeviceContext* dcontext, HINSTANCE hinstanc
 	earActive = false;
 	update = true;
 	border = 0;
-
+	memory = 0;
 	memory = new Memory(nullptr);
 	
 	z80 = new Z80(memory);
 	z80->AddDevice(this);
 	
-	speaker = new Loudspeaker();
-	speaker->Init(hwnd);
 
 	//	Init direct input for keyboard
 	DirectInput8Create(hinstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, NULL);
@@ -67,6 +69,7 @@ ULA::ULA(ID3D11Device* device, ID3D11DeviceContext* dcontext, HINSTANCE hinstanc
 	colors[15] = c15;
 
 	//LoadSNA("hobbit.sna");
+	LoadTAP("z80docflags.tap");
 }
 
 //	Destructor
@@ -86,6 +89,77 @@ ULA::~ULA()
 		directInput->Release();
 		directInput = 0;
 	}
+}
+
+void ULA::LoadTAP(string fileName)
+{
+	nextBlock = 0;
+	ifstream myfile (fileName, ios::binary);
+	if (myfile.is_open())
+	{
+		myfile.seekg(0, ios::end);
+		size_t fileSize = myfile.tellg();
+		myfile.seekg(0, ios::beg);
+
+		while (myfile.tellg() < fileSize)
+		{
+			int low = myfile.get();
+			int high = myfile.get();
+			int blockLength = low + (high << 8);
+			vector<byte> data(blockLength, 0);
+			myfile.read(reinterpret_cast<char*>(&data[0]), blockLength);
+			tapeBlocks.push_back(data);
+		}
+		myfile.close();
+	}
+}
+
+void ULA::LoadBlock()
+{
+	vector<byte> currentBlock = tapeBlocks[nextBlock];
+	nextBlock = (nextBlock + 1) % tapeBlocks.size();
+
+    if ((z80->F2 & 0x01) == 0x01)
+    {
+        //  Load command
+        if (z80->A2 == currentBlock[0])
+        {
+            unsigned int blockLength = z80->E + (z80->D << 8);
+            int address = z80->IXL + (z80->IXH << 8);
+			int min = (blockLength < currentBlock.size() - 1) ? blockLength : currentBlock.size() - 1;
+
+			for (int i = 0; i < min; i++)
+            {
+                if (address >= 0x4000)
+                {
+                    memory->memory[address] = currentBlock[i + 1];
+                }
+                address = (address + 1) & 0xffff;
+            }
+
+			if (blockLength > currentBlock.size() - 1)
+            {
+                //  R: tape Load error
+                z80->Reset(CARRY);
+            }
+            else
+            {
+                //  Success!
+                z80->Set(CARRY);
+            }
+        }
+        else
+        {
+            //  R: tape Load error
+            z80->Reset(CARRY);
+        }
+    }
+    else
+    {
+        //  Verify command
+        z80->Set(CARRY);
+    }
+    z80->PC = 0x05e2;
 }
 
 //	Runs the z80 for 69888 Tstates (1/50 second) and generates 50Hz interrupt
@@ -109,7 +183,7 @@ void ULA::updateFrame()
         for (int i = 0; i < 882; i++)
         {
             //  69888 / 882 = 79 TStates per sample
-            z80->Run(false, 79);
+            z80->Run(79);
             //  we just take the last value sent to the ear output
             if (earActive)
             {
@@ -121,8 +195,14 @@ void ULA::updateFrame()
                 buffer.push_back(0);
 				buffer.push_back(0);
             }
+			//  Check for LOAD
+            if (z80->fastLoad)
+            {
+                LoadBlock();
+                z80->fastLoad = false;
+            }
         }
-		speaker->Play(buffer);
+		//speaker->Play(buffer);
 		buffer.clear();
 
         //  Check control keys
@@ -216,10 +296,44 @@ void ULA::getUserInput()
 		exit(0);
 	}
 
+	//	Load tape / snapshot
+	if (keyboardState[DIK_F4] & 0x80)
+	{
+		OPENFILENAME ofn;
+		char szFile[100] ;
+
+		ZeroMemory( &ofn , sizeof( ofn));
+		ofn.lStructSize = sizeof ( ofn );
+		ofn.hwndOwner = NULL  ;
+		ofn.lpstrFile = szFile ;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = sizeof( szFile );
+		ofn.lpstrFilter = "TAP\0*.TAP\0SNA\0*.SNA";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL ;
+		ofn.nMaxFileTitle = 0 ;
+		ofn.lpstrInitialDir=NULL ;
+		ofn.Flags = OFN_PATHMUSTEXIST|OFN_FILEMUSTEXIST ;
+		GetOpenFileName( &ofn );
+		if (ofn.nFilterIndex = 1)
+		{
+			LoadTAP(ofn.lpstrFile);
+		} else {
+			LoadSNA(ofn.lpstrFile);
+		}
+	}
+
 	//	Save snapshot
 	if (keyboardState[DIK_F5] & 0x80)
 	{
-		//	#TODO
+		SaveSNA("save.sna");
+	}
+
+	//	Reset machine
+	if (keyboardState[DIK_F12] & 0x80)
+	{
+		z80->memory->ClearRAM();
+        z80->Reset();
 	}
 }
 
@@ -417,4 +531,53 @@ void ULA::LoadSNA(string fileName)
 	} else {
 		cout << "Couldn't open ROM file." << endl;
 	}
+}
+void ULA::SaveSNA(string fileName)
+{
+    ofstream myfile (fileName, ios::binary);
+	if (myfile.is_open())
+	{
+        memory->memory[z80->SP - 1] = z80->PC >> 8;
+        memory->memory[z80->SP - 2] = z80->PC & 0xff;
+        myfile.put((char)z80->I);
+        myfile.put((char)z80->L2);
+        myfile.put((char)z80->H2);
+        myfile.put((char)z80->E2);
+        myfile.put((char)z80->D2);
+        myfile.put((char)z80->C2);
+        myfile.put((char)z80->B2);
+        myfile.put((char)z80->F);
+        myfile.put((char)z80->A2);
+        myfile.put((char)z80->L);
+        myfile.put((char)z80->H);
+        myfile.put((char)z80->E);
+        myfile.put((char)z80->D);
+        myfile.put((char)z80->C);
+        myfile.put((char)z80->B);
+        myfile.put((char)z80->IYL);
+        myfile.put((char)z80->IYH);
+        myfile.put((char)z80->IXL);
+        myfile.put((char)z80->IXH);
+        if (z80->IFF2 == true)
+        {
+            myfile.put((char)4);
+        }
+        else
+        {
+            myfile.put((char)0);
+        }
+        myfile.put((char)z80->R);
+        myfile.put((char)z80->F2);
+        myfile.put((char)z80->A);
+        myfile.put((char)(z80->SP & 0xff));
+        myfile.put((char)(z80->SP >> 8));
+        myfile.put((char)z80->interruptMode);
+        myfile.put((char)this->border);
+
+		for (int i = 16384; i < 65536; i++)
+        {
+            myfile.put((char)memory->memory[i, true]);
+        }
+		myfile.close();
+    }
 }

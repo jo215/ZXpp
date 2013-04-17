@@ -9,7 +9,6 @@ using namespace std;
 TextureCache::TextureCache(ID3D11Device* device, ID3D11DeviceContext* context)
 {
 	//	We load all our textures here
-
 	block = 0;
 	string blockName = "pixelSlices\\block.png";
 	wstring wName = wstring(blockName.begin(), blockName.end());

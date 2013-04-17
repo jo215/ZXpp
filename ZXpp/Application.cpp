@@ -58,7 +58,7 @@ void Render();
 // Entry point to the program. Initializes everything and goes into a message processing 
 // loop. Idle time is used to render the scene.
 //--------------------------------------------------------------------------------------
-int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int WINAPI wWinMain(_In_ HINSTANCE hInstance,_In_opt_ HINSTANCE hPrevInstance,_In_ LPWSTR lpCmdLine,_In_ int nCmdShow )
 {
     UNREFERENCED_PARAMETER( hPrevInstance );
     UNREFERENCED_PARAMETER( lpCmdLine );
@@ -117,7 +117,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
 
     // Create window
     g_hInst = hInstance;
-    RECT rc = { 0, 0, 660, 690 };
+    RECT rc = { 0, 0, 700, 620 };
     AdjustWindowRect( &rc, (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX), FALSE );
     g_hWnd = CreateWindow( "ZXWindowClass", "ZX++",  (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX),
                            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
@@ -223,7 +223,6 @@ HRESULT InitDevice()
 	//frc = new FrameRateCounter(g_pd3dDevice , g_pImmediateContext);
 	//	Tests
 	//test = new TestZ80(frc);
-
     return S_OK;
 }
 
@@ -273,30 +272,19 @@ LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam 
 //--------------------------------------------------------------------------------------
 void Render()
 {
-    //
-    // Clear the back buffer
-    //
-    //g_pImmediateContext->ClearRenderTargetView( g_pRenderTargetView, Colors::MidnightBlue );
-
 
 	double elapsedMillis = timer->getElapsedTimeMillis();
 	if (elapsedMillis < 20)
 	{
-		//	 Just render
-		//ula->render();
+		//	 Do nothing
 	}
 	else
 	{
 		//	Update and render
+		g_pImmediateContext->ClearRenderTargetView( g_pRenderTargetView, Colors::MidnightBlue );
 		timer->restart();
 		ula->updateFrame();
 		ula->render();	
-	}
-
-	//	Draw the Frame rate counter
-	//frc->render();
-    
-    // Present our back buffer to our front buffer
-    //
-    g_pSwapChain->Present( 0, 0 );
+		g_pSwapChain->Present( 0, 0 );
+	}    
 }

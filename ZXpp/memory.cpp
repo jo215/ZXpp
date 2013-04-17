@@ -34,7 +34,7 @@ void Memory::LoadROM(string romFileName)
 		myfile.seekg(0, ios::beg);
 		vector<byte> data(fileSize, 0);
 		myfile.read(reinterpret_cast<char*>(&data[0]), fileSize);
-		for (int i = 0; i < data.size(); i++)
+		for (unsigned int i = 0; i < data.size(); i++)
 		{
 			memory[i] = data[i];
 		}
@@ -42,6 +42,16 @@ void Memory::LoadROM(string romFileName)
 	} else {
 		cout << "Couldn't open ROM file." << endl;
 	}
+}
+
+//	Clears the memory back to initial state
+void Memory::ClearRAM()
+{
+	LoadROM("48.rom");
+    for (int i = romEnd + 1; i < 65536; i++)
+    {
+        memory[i] = 0;
+    }
 }
 
 //	Returns the contents of a memory location

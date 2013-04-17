@@ -10,6 +10,7 @@
 #include "SpriteBatch.h"
 #include "memory.h"
 #include "z80.h"
+#include "Flags.cpp"
 #include "Loudspeaker.h"
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -20,6 +21,7 @@
 #include <string>
 
 
+enum Flag;
 /*
  *	Represents the Ferranti ULA chip
  */
@@ -57,6 +59,9 @@ private:
 	vector<unsigned char> buffer;
 	XMVECTORF32 colors[16];
 
+	vector<vector<unsigned char>> tapeBlocks;
+	int nextBlock;
+
 	void getUserInput();
 public:
 	
@@ -71,6 +76,8 @@ public:
 	//	File load / save
 	void LoadSNA(string fileName);
 	void SaveSNA(string fileName);
+	void LoadTAP(string fileName);
+	void LoadBlock();
 
 	//	Constructor / destructor
 	ULA(ID3D11Device* device, ID3D11DeviceContext* context, HINSTANCE hinstance, HWND hwnd, ID3D11RenderTargetView* backBuffer);

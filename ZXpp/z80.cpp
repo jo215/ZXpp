@@ -25,6 +25,7 @@ void Z80:: Reset()
 	A = 0xff;
 	SP = 0xffff;
 	B = 0; C = 0; D = 0; E = 0; H = 0; L = 0; I = 0; R = 0; IXH = 0; IXL = 0; IYH = 0; IYL = 0;
+	A2 = 0; B2 = 0; C2 = 0; D2 = 0; E2 = 0; H2 = 0; L2 = 0;
 	F = 0xff;
 	F2 = 0;
 	isHalted = false;
@@ -32,6 +33,7 @@ void Z80:: Reset()
 	IFF1 = false;
 	IFF2 = false;
 	interruptMode = 0;
+	fastLoad = false;
 
 	//  Sanity
 	opcode = 0;
@@ -77,13 +79,20 @@ void Z80:: Interrupt(bool nonMaskable)
 }
 
 //	Main execution loop
-void Z80:: Run(bool exitOnNOP, int maxTStates)
+void Z80:: Run(int maxTStates)
 {
 	cycleTStates = cycleTStates % 69888;
     previousTStates = cycleTStates;
 	bool running = true;
 	while (running)
 	{
+
+		//  Trap tape load
+        if (PC == 0x056c || PC == 0x0112)
+        {
+            fastLoad = true;
+            return;
+        }
 
 		//  Fetch
 		opcode = memory->memory[PC++];
@@ -538,6 +547,7 @@ int Z80:: FlagAsInt(Flag flag)
 		case SIGN:
 		return 128;
 	}
+	return 0;
 }
 
 //	Sets the specified flag
@@ -1720,7 +1730,7 @@ void Z80:: IN_r_C(int r)
 {
 	cycleTStates += 12;
 
-    int input = io->Read(Get16BitRegisters(0, false));
+    int input = io->Read(Get16BitRegisters(0, false)) & 0xff;
     if (r != 6  && opcode != 0xed70)
         SetRegister(r, input);
 
@@ -1729,7 +1739,6 @@ void Z80:: IN_r_C(int r)
 	Reset(HALFCARRY);
     ModifyParityFlagLogical(input);
 	Reset(SUBTRACT);
-
     ModifyUndocumentedFlags8(input);
 }
 

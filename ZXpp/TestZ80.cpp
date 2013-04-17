@@ -116,7 +116,7 @@ void TestZ80::RunTests()
 		{
 			vector<string> memDef = split(testInput.c_str(), ' ');
 			assert(memDef[memDef.size() - 1] == "-1");
-			for (int i = 1; i < memDef.size() - 1; i++)
+			for (unsigned int i = 1; i < memDef.size() - 1; i++)
 			{
 				memory->memory[hexToInt(memDef[0]) + (i-1)] = hexToInt(memDef[i]);
 			}
@@ -126,7 +126,7 @@ void TestZ80::RunTests()
 		readLine(in);
 
 		//	Run z80 for 1 instruction
-		target->Run(false, numStates);
+		target->Run(numStates);
 
 		//	Read expected results
 		assert(readLine(expect) == testName);
@@ -199,7 +199,7 @@ void TestZ80::RunTests()
 		{
 			vector<string> memDef = split(testInput.c_str(), ' ');
 			assert(memDef[memDef.size() - 1] == "-1");
-			for (int i = 1; i < memDef.size() - 1; i++)
+			for (unsigned int i = 1; i < memDef.size() - 1; i++)
 			{
 				OutputDebugString("Location ");
 				OutputDebugString(to_string(hexToInt(memDef[0]) + (i - 1)).c_str());

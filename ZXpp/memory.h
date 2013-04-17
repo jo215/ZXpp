@@ -14,6 +14,7 @@ private:
 	friend class TestZ80;
 	static const int romStart = 0, romEnd = 16383, contentionStart = 0x4000, contentionEnd = 0x7fff;
 	void Reset();
+
 public:
 	int memory[65536];
 	Z80 *CPU;
@@ -25,6 +26,7 @@ public:
 	void CorrectForContention(int index);
 	void Write(int index, int value, bool ulaAccess);
 	void LoadROM(std::string romFileName);
+	void ClearRAM();
 };
 
 #endif

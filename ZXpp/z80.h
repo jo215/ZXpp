@@ -25,13 +25,14 @@ private:
 	//	Index registers
 	int IXH, IXL, IYH, IYL;
 	//	Memory refresh / interrupt
-	int R, I, IFF1, IFF2, interruptMode;
+	int R, I, interruptMode;
+	bool IFF1, IFF2;
 
 	//	Current instruction information
 	int opcode, prefix, prefix2, displacement;
 
 	//	Other bits
-	bool isHalted, ignorePrefix;
+	bool isHalted, ignorePrefix, fastLoad;
 
 	//	The memory!
 	Memory* memory;
@@ -220,7 +221,7 @@ public:
 	void Reset();
 	void SetFlags(int flagsByte);
 	void Interrupt(bool nonMaskable);
-	void Run(bool exitOnNOP, int maxTStates);
+	void Run(int maxTStates);
 	//	Sets the ula pointer
 	void AddDevice(IioDevice* ula);
 };
